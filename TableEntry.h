@@ -2,7 +2,7 @@
 #define TABLE_ENTRY_H
 
 #include <string>
-#include <iostream>   // <-- necesario para operator<<
+#include <iostream>
 
 template <typename V>
 class TableEntry {
@@ -39,9 +39,18 @@ public:
     bool operator!=(const TableEntry<V> &other) const {
         return !(*this == other);
     }
+
+    // NECESARIO PARA EL ABB
+    bool operator<(const TableEntry<V> &other) const {
+        return key < other.key;
+    }
+
+    bool operator>(const TableEntry<V> &other) const {
+        return key > other.key;
+    }
 };
 
-// ---- AÑADIR ESTO ----
+// operador <<
 template <typename V>
 std::ostream& operator<<(std::ostream& os, const TableEntry<V>& entry) {
     os << "(" << entry.getKey() << ", " << entry.getValue() << ")";

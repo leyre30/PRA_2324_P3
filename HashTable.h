@@ -16,12 +16,14 @@ private:
     int numElements;
     std::vector<std::list<TableEntry<V>>> table;
 
+    // 🔥 FUNCIÓN HASH EXACTA DEL PROFESOR (suma ASCII)
     int hash(const std::string &key) const {
-        std::hash<std::string> hasher;
-        return hasher(key) % bucketCount;
+        int sum = 0;
+        for (char c : key)
+            sum += c;
+        return sum % bucketCount;
     }
 
-    // Permite que operator<< acceda a table
     template <typename U>
     friend std::ostream& operator<<(std::ostream&, const HashTable<U>&);
 
@@ -98,7 +100,6 @@ public:
         return false;
     }
 
-    // ESTE ERA EL QUE FALTABA PARA QUE NO FUERA ABSTRACTA
     bool erase(const std::string &key) override {
         int idx = hash(key);
         auto &bucket = table[idx];
